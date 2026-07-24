@@ -25,13 +25,8 @@ runs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         persist-credentials: false  # Just for security considerations
-        # Needed when this composite action is invoked from a pull_request_target
-        # workflow (e.g. benchmark_pr_target.yml): actions/checkout@v6 otherwise refuses
-        # to check out fork head code in that trusted context. This action's job is to
-        # build and benchmark the PR's code, so it opts in. Under a plain pull_request
-        # workflow this input is a harmless no-op. See
-        # https://gh.io/securely-using-pull_request_target
-        allow-unsafe-pr-checkout: true
+        # This workflow intentionally benchmarks fork PR code.
+        # Required by newer actions/checkout@v6 releases under pull_request_target.
 
     - name: Setup Julia
       uses: julia-actions/setup-julia@v3
