@@ -25,6 +25,9 @@ runs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         persist-credentials: false  # Just for security considerations
+        # This workflow intentionally benchmarks fork PR code.
+        # Required by newer actions/checkout@v6 releases under pull_request_target.
+        allow-unsafe-pr-checkout: true
 
     - name: Setup Julia
       uses: julia-actions/setup-julia@v3

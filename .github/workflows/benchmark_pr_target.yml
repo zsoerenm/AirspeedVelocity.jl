@@ -17,6 +17,9 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          # This workflow intentionally benchmarks fork PR code.
+          # Required by newer actions/checkout@v6 releases under pull_request_target.
+          allow-unsafe-pr-checkout: true
       - name: Run AirspeedVelocity composite action (local path)
         uses: ./                  # uses action.yml at the repo root
         with:
