@@ -17,6 +17,13 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          # This workflow intentionally benchmarks the PR's code (it needs the write
+          # token to comment on fork PRs), so it opts in to checking out fork head code
+          # under pull_request_target. actions/checkout@v6 refuses this by default; the
+          # composite action already runs the PR's code, so this re-accepts the existing
+          # (documented) risk rather than adding new exposure — see
+          # https://gh.io/securely-using-pull_request_target
+          allow-unsafe-pr-checkout: true
       - name: Run AirspeedVelocity composite action (local path)
         uses: ./                  # uses action.yml at the repo root
         with:
